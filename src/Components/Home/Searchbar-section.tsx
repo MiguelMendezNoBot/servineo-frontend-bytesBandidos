@@ -3,7 +3,7 @@
 
 import { Search, X } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSearchHistory } from '@/app/redux/features/searchHistory/useSearchHistory';
 import { useSearchSuggestions } from '@/app/redux/features/searchHistory/useSearchSuggestions';
 import { useSearchKeyboard } from '@/app/redux/features/searchHistory/useSearchKeyboard';
@@ -28,6 +28,7 @@ export function SearchBar({
   onSearch,
 }: SearchBarProps) {
   const router = useRouter();
+  const pathname = usePathname(); // ← AÑADIR
 
   // Estado local
   const [isFocused, setIsFocused] = useState(false);
@@ -39,6 +40,20 @@ export function SearchBar({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const currentLanguage = useMemo(() => {
+    const pathSegments = (pathname || '').split('/').filter(Boolean);
+    const langSegment = pathSegments[0];
+    return ['en', 'es'].includes(langSegment) ? langSegment : 'es';
+  }, [pathname]);
+
+  const localizedPlaceholder = useMemo(() => {
+    const placeholders: { [key: string]: string } = {
+      en: 'Search jobs, locations, services...',
+      es: 'Buscar trabajos, ubicaciones, servicios...'
+    };
+    return placeholders[currentLanguage] || placeholders.es;
+  }, [currentLanguage]);
+
   // Hooks personalizados para historial y sugerencias
   const { history, addToHistory, removeFromHistory, clearHistory } = useSearchHistory({
     useBackend: true,
@@ -49,6 +64,7 @@ export function SearchBar({
     minLength: 1,
     debounceMs: 300,
     maxResults: 6,
+    language: currentLanguage, // ← PASAR IDIOMA DETECTADO
   });
 
   // Función para realizar la búsqueda con redirección
@@ -207,7 +223,7 @@ export function SearchBar({
       <input
         ref={inputRef}
         type="text"
-        placeholder={placeholder}
+        placeholder={localizedPlaceholder} // ← USAR PLACEHOLDER LOCALIZADO
         value={previewValue ?? value}
         onChange={handleInputChange}
         onFocus={() => {
