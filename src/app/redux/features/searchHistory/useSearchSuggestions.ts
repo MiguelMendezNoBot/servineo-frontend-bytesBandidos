@@ -1,7 +1,7 @@
 // src/app/redux/features/searchHistory/useSearchSuggestions.ts
 import { useState, useEffect, useRef } from 'react';
 import { useLazyGetSearchSuggestionsQuery } from '@/app/redux/services/searchHistoryApi';
-import { translateSuggestions } from '@/app/lib/utils/translate/dictionary';
+import { translateSuggestions, translateWithDictionary } from '@/app/lib/utils/translate/dictionary';
 
 interface UseSearchSuggestionsOptions {
   enabled?: boolean;
@@ -63,27 +63,26 @@ export function useSearchSuggestions(
 
     // Configurar nuevo timer con debounce
     debounceTimerRef.current = setTimeout(() => {
-      trigger({ query: trimmed, limit: maxResults })
+      let queryToSearch = trimmed;
+      if (language === 'en') {
+        queryToSearch = translateWithDictionary(trimmed, 'es');
+      }
+      trigger({ query: queryToSearch, limit: maxResults })
         .unwrap()
         .then((results) => {
           let processedResults = results;
           
+          // Traducir resultados de vuelta a inglés si es necesario
           if (language === 'en' && results.length > 0) {
-            const hasSpanishChars = results.some(term => 
-              term.match(/[áéíóúñü]/i)
-            );
-            
-            if (hasSpanishChars) {
-              console.log('Translating suggestions from Spanish to English');
-              processedResults = translateSuggestions(results, 'en');
-            }
+            console.log('✅ Translating suggestions to English');
+            processedResults = translateSuggestions(results, 'en');
           }
           
           setSuggestions(processedResults.slice(0, maxResults));
           setLocalError(null);
         })
         .catch((err) => {
-          console.error('Error fetching suggestions:', err);
+          console.error('❌ Error fetching suggestions:', err);
           setLocalError('Error al cargar sugerencias');
           setSuggestions([]);
         });
@@ -103,10 +102,7 @@ export function useSearchSuggestions(
       let processedData = data;
       
       if (language === 'en' && data.length > 0) {
-        const hasSpanishChars = data.some(term => term.match(/[áéíóúñü]/i));
-        if (hasSpanishChars) {
-          processedData = translateSuggestions(data, 'en');
-        }
+        processedData = translateSuggestions(data, 'en');
       }
       
       setSuggestions(processedData.slice(0, maxResults));
