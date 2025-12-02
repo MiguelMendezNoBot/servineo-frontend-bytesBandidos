@@ -134,8 +134,112 @@
     'hola': { en: 'hello', es: 'hola' },
     'hello': { en: 'hello', es: 'hola' }, // ⭐ INVERSA
     'hormigón': { en: 'concrete', es: 'hormigon' },
-    'concrete': { en: 'concrete', es: 'hormigon' }, // ⭐ INVERSA
-    };
+    'concrete': { en: 'concrete', es: 'hormigon' }, 
+    'bricklayer': { en: 'bricklayer', es: 'albañil' },
+
+    'techador': { en: 'roofer', es: 'techador' },
+    'roofer': { en: 'roofer', es: 'techador' },
+
+    'yesero': { en: 'plasterer', es: 'yesero' },
+    'plasterer': { en: 'plasterer', es: 'yesero' },
+
+    'vidriero': { en: 'glazier', es: 'vidriero' },
+    'glazier': { en: 'glazier', es: 'vidriero' },
+
+    'soldador': { en: 'welder', es: 'soldador' },
+    'welder': { en: 'welder', es: 'soldador' },
+
+    'gasista': { en: 'gas fitter', es: 'gasista' },
+    'gas fitter': { en: 'gas fitter', es: 'gasista' },
+
+
+    'decorador': { en: 'decorator', es: 'decorador' },
+    'decorator': { en: 'decorator', es: 'decorador' },
+
+    'limpiador': { en: 'cleaner', es: 'limpiador' },
+    'cleaner': { en: 'cleaner', es: 'limpiador' },
+
+    'desarrollador': { en: 'developer', es: 'desarrollador' },
+    'developer': { en: 'developer', es: 'desarrollador' },
+
+    'chofer': { en: 'driver', es: 'chofer' },
+    'driver': { en: 'driver', es: 'chofer' },
+
+    'profesor': { en: 'teacher', es: 'profesor' },
+    'teacher': { en: 'teacher', es: 'profesor' },
+
+    'ingeniero civil': { en: 'civil engineer', es: 'ingeniero civil' },
+    'civil engineer': { en: 'civil engineer', es: 'ingeniero civil' },
+
+    // ======= AMBIENTES =======
+    'home': { en: 'home', es: 'hogar' },
+
+    'negocios': { en: 'businesses', es: 'negocios' },
+    'businesses': { en: 'businesses', es: 'negocios' },
+
+    'obras': { en: 'works', es: 'obras' },
+    'works': { en: 'works', es: 'obras' },
+
+
+    'remodelaciones': { en: 'remodeling', es: 'remodelaciones' },
+
+    'muro': { en: 'wall', es: 'muro' },
+    'wall': { en: 'wall', es: 'muro' },
+
+    'exterior': { en: 'exterior', es: 'exterior' },
+    'interior': { en: 'interior', es: 'interior' },
+
+    'agua': { en: 'water', es: 'agua' },
+    'water': { en: 'water', es: 'agua' },
+
+    'electricidad': { en: 'electricity', es: 'electricidad' },
+    'electricity': { en: 'electricity', es: 'electricidad' },
+
+    'madera': { en: 'wood', es: 'madera' },
+    'wood': { en: 'wood', es: 'madera' },
+
+    'metal': { en: 'metal', es: 'metal' },
+
+    'piso': { en: 'floor', es: 'piso' },
+    'floor': { en: 'floor', es: 'piso' },
+
+    'techo': { en: 'roof', es: 'techo' },
+    'roof': { en: 'roof', es: 'techo' },
+
+    'ventana': { en: 'window', es: 'ventana' },
+    'window': { en: 'window', es: 'ventana' },
+
+    'puerta': { en: 'door', es: 'puerta' },
+    'door': { en: 'door', es: 'puerta' },
+
+    'ducha': { en: 'shower', es: 'ducha' },
+    'shower': { en: 'shower', es: 'ducha' },
+
+    'parrillas': { en: 'grills', es: 'parrillas' },
+    'grills': { en: 'grills', es: 'parrillas' },
+
+    'hornos': { en: 'ovens', es: 'hornos' },
+    'ovens': { en: 'ovens', es: 'hornos' },
+
+    // ======= PALABRAS GENERALES =======
+    'trabajo': { en: 'job', es: 'trabajo' },
+    'adiós': { en: 'goodbye', es: 'adiós' },
+    'goodbye': { en: 'goodbye', es: 'adiós' },
+    'buenas': { en: 'hello', es: 'buenas' },
+
+    // ======= LUGARES (NO SE TRADUCEN) =======
+    'cochabamba': { en: 'cochabamba', es: 'cochabamba' },
+    'la paz': { en: 'la paz', es: 'la paz' },
+    'santa cruz': { en: 'santa cruz', es: 'santa cruz' },
+    'oruro': { en: 'oruro', es: 'oruro' },
+    'potosí': { en: 'potosí', es: 'potosí' },
+    'beni': { en: 'beni', es: 'beni' },
+    'pando': { en: 'pando', es: 'pando' },
+    'tarija': { en: 'tarija', es: 'tarija' },
+    'chuquisaca': { en: 'chuquisaca', es: 'chuquisaca' },
+    'perú': { en: 'peru', es: 'perú' },
+    'latinoamérica': { en: 'latin america', es: 'latinoamérica' },
+        };
 
     function preserveCapitalization(original: string, translation: string): string {
     if (original === original.toUpperCase()) {
