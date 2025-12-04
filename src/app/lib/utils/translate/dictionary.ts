@@ -4,106 +4,109 @@
 const translationDictionary: { [key: string]: { en: string; es: string } } = {
   // Profesiones/Oficios - TODOS en minúscula
   electricista: { en: 'electrician', es: 'electricista' },
-  electrician: { en: 'electrician', es: 'electricista' }, // ⭐ INVERSA
+  electrician: { en: 'electrician', es: 'electricista' },
   plomero: { en: 'plumber', es: 'plomero' },
   plomeros: { en: 'plumbers', es: 'plomeros' },
-  plumber: { en: 'plumber', es: 'plomero' }, // ⭐ INVERSA
+  plumber: { en: 'plumber', es: 'plomero' }, 
   plumbers: { en: 'plumbers', es: 'plomeros' },
   fontanero: { en: 'plumber', es: 'fontanero' },
   gasfitero: { en: 'plumber', es: 'gasfitero' },
   plomeria: { en: 'plumbing', es: 'plomeria' },
-  plumbing: { en: 'plumbing', es: 'plomeria' }, // ⭐ INVERSA
+  plumbing: { en: 'plumbing', es: 'plomeria' }, 
   carpintero: { en: 'carpenter', es: 'carpintero' },
-  carpenter: { en: 'carpenter', es: 'carpintero' }, // ⭐ INVERSA
+  carpenter: { en: 'carpenter', es: 'carpintero' }, 
   carpintería: { en: 'carpentry', es: 'carpintería' },
-  carpentry: { en: 'carpentry', es: 'carpintería' }, // ⭐ INVERSA
+  jardin: { en: 'garden', es: 'jardin' },
+  garden: { en: 'garden', es: 'jardin' },
+  jardín: { en: 'garden', es: 'jardín' },
+  carpentry: { en: 'carpentry', es: 'carpintería' },
   especializado: { en: 'specialized', es: 'especializado' },
-  specialized: { en: 'specialized', es: 'especializado' }, // ⭐ INVERSA
+  specialized: { en: 'specialized', es: 'especializado' },
   pintor: { en: 'painter', es: 'pintor' },
-  painter: { en: 'painter', es: 'pintor' }, // ⭐ INVERSA
+  painter: { en: 'painter', es: 'pintor' },
   albañil: { en: 'mason', es: 'albañil' },
-  mason: { en: 'mason', es: 'albañil' }, // ⭐ INVERSA
+  mason: { en: 'mason', es: 'albañil' },
   jardinero: { en: 'gardener', es: 'jardinero' },
-  gardener: { en: 'gardener', es: 'jardinero' }, // ⭐ INVERSA
+  gardener: { en: 'gardener', es: 'jardinero' },
   mecánico: { en: 'mechanic', es: 'mecánico' },
-  mechanic: { en: 'mechanic', es: 'mecánico' }, // ⭐ INVERSA
+  mechanic: { en: 'mechanic', es: 'mecánico' },
   cerrajero: { en: 'locksmith', es: 'cerrajero' },
-  locksmith: { en: 'locksmith', es: 'cerrajero' }, // ⭐ INVERSA
+  locksmith: { en: 'locksmith', es: 'cerrajero' }, 
   técnico: { en: 'technician', es: 'técnico' },
-  technician: { en: 'technician', es: 'técnico' }, // ⭐ INVERSA
+  technician: { en: 'technician', es: 'técnico' },
   reparación: { en: 'repair', es: 'reparación' },
-  repair: { en: 'repair', es: 'reparación' }, // ⭐ INVERSA
+  repair: { en: 'repair', es: 'reparación' }, 
   instalación: { en: 'installation', es: 'instalación' },
-  installation: { en: 'installation', es: 'instalación' }, // ⭐ INVERSA
+  installation: { en: 'installation', es: 'instalación' },
   mantenimiento: { en: 'maintenance', es: 'mantenimiento' },
-  maintenance: { en: 'maintenance', es: 'mantenimiento' }, // ⭐ INVERSA
+  maintenance: { en: 'maintenance', es: 'mantenimiento' }, 
 
   // Electrodomésticos y tecnología
   electrodomésticos: { en: 'appliances', es: 'electrodomésticos' },
-  appliances: { en: 'appliances', es: 'electrodomésticos' }, // ⭐ INVERSA
+  appliances: { en: 'appliances', es: 'electrodomésticos' },
   refrigerador: { en: 'refrigerator', es: 'refrigerador' },
-  refrigerator: { en: 'refrigerator', es: 'refrigerador' }, // ⭐ INVERSA
+  refrigerator: { en: 'refrigerator', es: 'refrigerador' },
   lavadora: { en: 'washing machine', es: 'lavadora' },
-  'washing machine': { en: 'washing machine', es: 'lavadora' }, // ⭐ INVERSA
+  'washing machine': { en: 'washing machine', es: 'lavadora' },
   secadora: { en: 'dryer', es: 'secadora' },
-  dryer: { en: 'dryer', es: 'secadora' }, // ⭐ INVERSA
+  dryer: { en: 'dryer', es: 'secadora' },
   televisor: { en: 'television', es: 'televisor' },
-  television: { en: 'television', es: 'televisor' }, // ⭐ INVERSA
+  television: { en: 'television', es: 'televisor' },
   computadora: { en: 'computer', es: 'computadora' },
-  computer: { en: 'computer', es: 'computadora' }, // ⭐ INVERSA
+  computer: { en: 'computer', es: 'computadora' },
   celular: { en: 'cell phone', es: 'celular' },
-  'cell phone': { en: 'cell phone', es: 'celular' }, // ⭐ INVERSA
+  'cell phone': { en: 'cell phone', es: 'celular' },
   tablet: { en: 'tablet', es: 'tablet' },
 
   // Servicios del hogar
   limpieza: { en: 'cleaning', es: 'limpieza' },
-  cleaning: { en: 'cleaning', es: 'limpieza' }, // ⭐ INVERSA
+  cleaning: { en: 'cleaning', es: 'limpieza' },
   jardinería: { en: 'gardening', es: 'jardinería' },
-  gardening: { en: 'gardening', es: 'jardinería' }, // ⭐ INVERSA
+  gardening: { en: 'gardening', es: 'jardinería' },
   pintura: { en: 'painting', es: 'pintura' },
-  painting: { en: 'painting', es: 'pintura' }, // ⭐ INVERSA
+  painting: { en: 'painting', es: 'pintura' },
   construcción: { en: 'construction', es: 'construcción' },
-  construction: { en: 'construction', es: 'construcción' }, // ⭐ INVERSA
+  construction: { en: 'construction', es: 'construcción' },
   reformas: { en: 'renovations', es: 'reformas' },
-  renovations: { en: 'renovations', es: 'reformas' }, // ⭐ INVERSA
+  renovations: { en: 'renovations', es: 'reformas' },
   remodelación: { en: 'remodeling', es: 'remodelación' },
-  remodeling: { en: 'remodeling', es: 'remodelación' }, // ⭐ INVERSA
+  remodeling: { en: 'remodeling', es: 'remodelación' },
 
   // Términos de búsqueda comunes
   casa: { en: 'house', es: 'casa' },
-  house: { en: 'house', es: 'casa' }, // ⭐ INVERSA
+  house: { en: 'house', es: 'casa' },
   apartamento: { en: 'apartment', es: 'apartamento' },
-  apartment: { en: 'apartment', es: 'apartamento' }, // ⭐ INVERSA
+  apartment: { en: 'apartment', es: 'apartamento' },
   oficina: { en: 'office', es: 'oficina' },
-  office: { en: 'office', es: 'oficina' }, // ⭐ INVERSA
+  office: { en: 'office', es: 'oficina' },
   local: { en: 'premises', es: 'local' },
-  premises: { en: 'premises', es: 'local' }, // ⭐ INVERSA
+  premises: { en: 'premises', es: 'local' },
   emergencia: { en: 'emergency', es: 'emergencia' },
-  emergency: { en: 'emergency', es: 'emergencia' }, // ⭐ INVERSA
+  emergency: { en: 'emergency', es: 'emergencia' },
   urgente: { en: 'urgent', es: 'urgente' },
-  urgent: { en: 'urgent', es: 'urgente' }, // ⭐ INVERSA
+  urgent: { en: 'urgent', es: 'urgente' }, 
   profesional: { en: 'professional', es: 'profesional' },
-  professional: { en: 'professional', es: 'profesional' }, // ⭐ INVERSA
+  professional: { en: 'professional', es: 'profesional' },
   calificado: { en: 'qualified', es: 'calificado' },
-  qualified: { en: 'qualified', es: 'calificado' }, // ⭐ INVERSA
+  qualified: { en: 'qualified', es: 'calificado' },
   experto: { en: 'expert', es: 'experto' },
-  expert: { en: 'expert', es: 'experto' }, // ⭐ INVERSA
+  expert: { en: 'expert', es: 'experto' },
 
   // Términos técnicos
   eléctrico: { en: 'electrical', es: 'eléctrico' },
-  electrical: { en: 'electrical', es: 'eléctrico' }, // ⭐ INVERSA
+  electrical: { en: 'electrical', es: 'eléctrico' },
   hidráulico: { en: 'hydraulic', es: 'hidráulico' },
-  hydraulic: { en: 'hydraulic', es: 'hidráulico' }, // ⭐ INVERSA
+  hydraulic: { en: 'hydraulic', es: 'hidráulico' },
   sanitario: { en: 'sanitary', es: 'sanitario' },
-  sanitary: { en: 'sanitary', es: 'sanitario' }, // ⭐ INVERSA
+  sanitary: { en: 'sanitary', es: 'sanitario' },
   estructura: { en: 'structure', es: 'estructura' },
-  structure: { en: 'structure', es: 'estructura' }, // ⭐ INVERSA
+  structure: { en: 'structure', es: 'estructura' },
   cimientos: { en: 'foundations', es: 'cimientos' },
-  foundations: { en: 'foundations', es: 'cimientos' }, // ⭐ INVERSA
+  foundations: { en: 'foundations', es: 'cimientos' },
 
   // Términos generales
   presupuesto: { en: 'budget', es: 'presupuesto' },
-  budget: { en: 'budget', es: 'presupuesto' }, // ⭐ INVERSA
+  budget: { en: 'budget', es: 'presupuesto' },
   cotización: { en: 'quote', es: 'cotización' },
   quote: { en: 'quote', es: 'cotización' }, // ⭐ INVERSA
   garantía: { en: 'warranty', es: 'garantía' },
@@ -124,8 +127,12 @@ const translationDictionary: { [key: string]: { en: string; es: string } } = {
   electronics: { en: 'electronics', es: 'electronics' },
   en: { en: 'on', es: 'en' },
   on: { en: 'on', es: 'en' }, // ⭐ INVERSA
-  de: { en: 'the', es: 'de' },
-  the: { en: 'the', es: 'de' }, // ⭐ INVERSA (cuidado con esto)
+  de: { en: 'of', es: 'de' },
+  of: { en: 'of', es: 'de' }, 
+  y: { en: 'and', es: 'y' }, 
+  and: { en: 'and', es: 'y' }, 
+  diseño: { en: 'design', es: 'diseño' },
+  design: { en: 'design', es: 'diseño' },
   canaletas: { en: 'gutters', es: 'canaletas' },
   gutters: { en: 'gutters', es: 'canaletas' }, // ⭐ INVERSA
   automatico: { en: 'automatic', es: 'automatico' },
@@ -133,6 +140,14 @@ const translationDictionary: { [key: string]: { en: string; es: string } } = {
   automáticos: { en: 'automatics', es: 'automatico' },
   automatics: { en: 'automatics', es: 'automatico' }, // ⭐ INVERSA
   hogar: { en: 'house', es: 'hogar' },
+  garaje: { en: 'garage', es: 'garaje' },
+  garage: { en: 'garage', es: 'garaje' }, // ⭐ INVERSA
+  garajes: { en: 'garages', es: 'garajes' },
+  garages: { en: 'garages', es: 'garajes' }, // ⭐ INVERSA
+  plantas: { en: 'plants', es: 'plantas' }, 
+    plants: { en: 'plants', es: 'plantas' }, // ⭐ INVERSA
+    planta: { en: 'plant', es: 'planta' },
+    plant: { en: 'plant', es: 'planta' }, // ⭐ INVERSA
   hola: { en: 'hello', es: 'hola' },
   hello: { en: 'hello', es: 'hola' }, // ⭐ INVERSA
   hormigón: { en: 'concrete', es: 'hormigon' },

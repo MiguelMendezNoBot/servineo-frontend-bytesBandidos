@@ -28,7 +28,7 @@ interface SearchBarProps {
 
 export const SearchBar = ({ onSearch, onFilter }: SearchBarProps) => {
   const t = useTranslations('search');
-  const pathname = usePathname(); // 👈 TU LÍNEA 1
+  const pathname = usePathname(); 
   const dispatch = useAppDispatch();
   const { findMatchingJobType, findMatchingCity } = useJobTypeAutoMatch();
 
@@ -71,7 +71,7 @@ export const SearchBar = ({ onSearch, onFilter }: SearchBarProps) => {
     minLength: 1,
     debounceMs: 300,
     maxResults: 6,
-    language: currentLanguage, // 👈 TU LÍNEA 7 (única modificación en su código)
+    language: currentLanguage, 
   });
 
   // Restaurar desde Redux/localStorage al cargar
