@@ -22,7 +22,6 @@ const MetricsCards: React.FC<MetricsCardsProps> = ({ metrics }) => {
     return pct > 100 ? 100 : pct; 
   };
 
-  // Usamos el valor mayor entre 'active' y la suma de los tipos para evitar errores si el backend es inconsistente
   const realTotal = Math.max(active, (virtual + presential));
   
   const presentialPercentage = getPercentage(presential || 0, realTotal);
@@ -31,13 +30,13 @@ const MetricsCards: React.FC<MetricsCardsProps> = ({ metrics }) => {
   return (
     <div className='flex flex-col gap-4'>
       
-      {/* 1. TOTAL */}
+
       <div className='bg-white shadow-sm rounded p-4 border-l-4 border-blue-500'>
         <h3 className='text-lg font-semibold text-gray-800'>{t('total')}</h3>
         <p className='text-3xl font-bold text-blue-600'>{total}</p>
       </div>
 
-      {/* 2. AGENDADAS (Con Barras Arregladas) */}
+
       <div className='bg-white shadow-sm rounded p-4 border-l-4 border-green-500 flex flex-col'>
         
         <div className="flex justify-between items-center mb-3">
@@ -47,13 +46,13 @@ const MetricsCards: React.FC<MetricsCardsProps> = ({ metrics }) => {
         
         <div className="space-y-4">
           
-          {/* Barra: Presenciales */}
+
           <div>
             <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
               <span>Presencial</span>
               <span className="text-green-600 font-bold">{presential || 0}</span>
             </div>
-            {/* 2. CORRECCIÓN VISUAL: overflow-hidden corta la barra si se pasa */}
+
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden"> 
               <div 
                 className="bg-green-600 h-3 rounded-full"
@@ -62,7 +61,7 @@ const MetricsCards: React.FC<MetricsCardsProps> = ({ metrics }) => {
             </div>
           </div>
 
-          {/* Barra: Virtuales */}
+
           <div>
             <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
               <span>Virtual</span>
@@ -79,7 +78,7 @@ const MetricsCards: React.FC<MetricsCardsProps> = ({ metrics }) => {
         </div>
       </div>
 
-      {/* 3. CANCELADAS */}
+
       <div className='bg-white shadow-sm rounded p-4 border-l-4 border-red-500'>
         <h3 className='text-lg font-semibold text-gray-800'>{t('cancelled')}</h3>
         <p className='text-3xl font-bold text-red-600'>{cancelled}</p>

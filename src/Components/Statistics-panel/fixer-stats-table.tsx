@@ -1,50 +1,81 @@
-'use client';
 import React from 'react';
+import { useTranslations } from 'next-intl';
+import { FixerStat } from '@/app/redux/services/trackingAppointmentsApi';
 
-interface FixerStat {
-  id: string;
-  name: string;
-  total: number;
-  active: number;
-  cancelled: number;
-  rescheduled: number;
-  rate: string;
+interface FixerStatsTableProps {
+  stats: FixerStat[];
+  loading?: boolean;
+  searchTerm?: string;
+  onSearchChange?: (val: string) => void;
 }
 
-const FixerStatsTable = ({ stats }: { stats: FixerStat[] }) => {
+const FixerStatsTable: React.FC<FixerStatsTableProps> = ({ 
+  stats, 
+  loading = false,
+  searchTerm = '',
+  onSearchChange 
+}) => {
+
+  const t = useTranslations('tracking.table');
+
   return (
-    <div className='bg-white rounded-xl shadow border border-gray-200 overflow-hidden'>
-      <div className='p-4 border-b border-gray-200'>
-        <h3 className='font-bold text-gray-800'>Rendimiento por Fixer</h3>
+    <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden'>
+      
+      <div className='p-5 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4'>
+        <h3 className='text-lg font-bold text-gray-800'>{t('title')}</h3>
+        
+        {onSearchChange && (
+          <div className="relative w-full sm:w-auto">
+            <input
+              type="text"
+              placeholder="" 
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-64 transition-all"
+            />
+            <svg className="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        )}
       </div>
+
       <div className='overflow-x-auto'>
-        <table className='w-full text-sm text-left text-gray-500'>
-          <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-            <tr>
-              <th className='px-6 py-3'>Fixer</th>
-              <th className='px-6 py-3 text-center'>Total</th>
-              <th className='px-6 py-3 text-center text-green-600'>Activas</th>
-              <th className='px-6 py-3 text-center text-red-600'>Canceladas</th>
-              <th className='px-6 py-3 text-center text-orange-500'>Reprogramadas</th>
-              <th className='px-6 py-3 text-center'>Tasa Cancelación</th>
+        <table className='w-full text-left border-collapse'>
+          <thead>
+            <tr className='bg-gray-50 text-gray-600 text-xs uppercase tracking-wider'>
+              <th className='p-4 font-semibold'>{t('fixer')}</th>
+              <th className='p-4 font-semibold text-center'>{t('total')}</th>
+              <th className='p-4 font-semibold text-center'>{t('active')}</th>
+              <th className='p-4 font-semibold text-center'>{t('cancelled')}</th>
+              <th className='p-4 font-semibold text-center'>{t('rescheduled')}</th>
+              <th className='p-4 font-semibold text-center'>{t('rate')}</th>
             </tr>
           </thead>
-          <tbody>
-            {stats.length > 0 ? (
-              stats.map((fixer) => (
-                <tr key={fixer.id} className='bg-white border-b hover:bg-gray-50'>
-                  <td className='px-6 py-4 font-medium text-gray-900'>{fixer.name}</td>
-                  <td className='px-6 py-4 text-center'>{fixer.total}</td>
-                  <td className='px-6 py-4 text-center'>{fixer.active}</td>
-                  <td className='px-6 py-4 text-center'>{fixer.cancelled}</td>
-                  <td className='px-6 py-4 text-center'>{fixer.rescheduled}</td>
-                  <td className='px-6 py-4 text-center font-bold'>{fixer.rate}</td>
+          <tbody className='divide-y divide-gray-100'>
+            {loading ? (
+              // Loading Skeleton
+              [...Array(3)].map((_, i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="p-4"><div className="h-4 bg-gray-200 rounded w-32"></div></td>
+                  <td className="p-4" colSpan={5}><div className="h-4 bg-gray-200 rounded w-full"></div></td>
+                </tr>
+              ))
+            ) : stats.length > 0 ? (
+              stats.map((row) => (
+                <tr key={row.id} className='hover:bg-gray-50 transition-colors text-sm text-gray-700'>
+                  <td className='p-4 font-medium text-gray-900'>{row.name}</td>
+                  <td className='p-4 text-center font-bold'>{row.total}</td>
+                  <td className='p-4 text-center text-green-600 font-medium'>{row.active}</td>
+                  <td className='p-4 text-center text-red-500 font-medium'>{row.cancelled}</td>
+                  <td className='p-4 text-center text-orange-500'>{row.rescheduled}</td>
+                  <td className='p-4 text-center text-gray-500'>{row.rate}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={6} className='px-6 py-4 text-center'>
-                  No hay datos disponibles
+                <td colSpan={6} className="p-8 text-center text-gray-400">
+                  No hay datos para mostrar.
                 </td>
               </tr>
             )}

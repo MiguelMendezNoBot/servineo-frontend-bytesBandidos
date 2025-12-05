@@ -5,7 +5,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 
-// Imágenes importadas correctamente
+
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -15,14 +15,12 @@ export interface Appointment {
   fixerName: string;
   requesterName: string;
   date: string;
-  status: 'booked' | 'cancelled' | string; // Agregado string por si acaso vienen otros estados
+  status: 'booked' | 'cancelled' | string; 
   lat: number;
   lng: number;
   service?: string;
 }
 
-// Configuración de Íconos de Leaflet
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -44,9 +42,8 @@ const formatBoDate = (isoString: string) => {
   }).format(date);
 };
 
-// Componente auxiliar para ajustar el zoom
 function FitBounds({ appointments }: { appointments: Appointment[] }) {
-  const map = useMap(); // Ahora usamos el hook importado correctamente
+  const map = useMap(); 
 
   useEffect(() => {
     if (appointments.length > 0) {
@@ -58,7 +55,7 @@ function FitBounds({ appointments }: { appointments: Appointment[] }) {
   return null;
 }
 
-// Íconos personalizados
+
 const bookedIcon = new L.Icon({
   iconUrl:
     'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
