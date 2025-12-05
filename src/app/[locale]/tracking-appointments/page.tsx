@@ -4,16 +4,18 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 
+// 🟢 1. IMPORTAR AMBOS HOOKS
 import {
   useGetMapLocationsQuery,
   useGetTrackingMetricsQuery,
   useGetFixerStatsQuery,
+  useGetAppointmentTypesCountQuery, // <--- ESTE ES EL NUEVO IMPORTANTE
 } from '@/app/redux/services/trackingAppointmentsApi';
 
 import FixerStatsTable from '@/Components/Statistics-panel/fixer-stats-table';
 import MetricsCards from '@/Components/Statistics-panel/metrics-cards';
 
-// 1. Definimos la interfaz de lo que viene de la API
+// ... (Tus interfaces ApiAppointment y MappedAppointment siguen igual, no las toco) ...
 interface ApiAppointment {
   _id: string;
   lat: string | number;
@@ -27,7 +29,6 @@ interface ApiAppointment {
   schedule_state?: string;
 }
 
-// 2. Definimos la interfaz de lo que usa el Mapa (debe coincidir con admin-map)
 interface MappedAppointment {
   id: string;
   fixerName: string;
@@ -39,12 +40,10 @@ interface MappedAppointment {
   service: string;
 }
 
-// Importación dinámica correcta (esto asegura que Leaflet no rompa el SSR)
 const AdminMap = dynamic(() => import('@/Components/Statistics-panel/admin-map'), {
   ssr: false,
   loading: () => (
     <div className='h-full w-full bg-gray-100 flex items-center justify-center text-gray-500 animate-pulse'>
-      {/* El texto se traduce en el componente padre */}
       <span id='map-loading-text'></span>
     </div>
   ),
@@ -56,16 +55,35 @@ const StatisticsPage: React.FC = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const { data: metrics = { total: 0, active: 0, cancelled: 0 } } = useGetTrackingMetricsQuery({
+  // 🟢 2. LLAMADA A: MÉTRICAS GENERALES (Total, Activas, Canceladas)
+  const { data: generalMetrics = { total: 0, active: 0, cancelled: 0 } } = useGetTrackingMetricsQuery({
     startDate,
     endDate,
   });
 
-  const { data: rawMapData = [], isLoading: loadingMap } = useGetMapLocationsQuery();
+  // 🟢 3. LLAMADA A: TIPOS (Virtual, Presencial)
+  // Nota: Si tu definición de API dice que no recibe argumentos, déjalo vacío (). 
+  // Si los acepta, pásale { startDate, endDate }. Por ahora lo dejo vacío para que no falle.
+  const { data: typesDataRaw } = useGetAppointmentTypesCountQuery({ 
+    startDate, 
+    endDate 
+  });
 
+  // 🟢 4. FUSIÓN DE DATOS (EL TRUCO)
+  // Creamos un objeto que tenga TODO junto para que la tarjeta no se quede en 0
+  const combinedMetrics = {
+    total: generalMetrics.total || 0,
+    active: generalMetrics.active || 0,
+    cancelled: generalMetrics.cancelled || 0,
+    // Aquí sacamos los datos del segundo endpoint. 
+    // Usamos 'any' porque tu interfaz de TS cree que es un array, pero el backend manda objeto.
+    virtual: (typesDataRaw as any)?.virtual || 0,
+    presential: (typesDataRaw as any)?.presential || 0
+  };
+
+  const { data: rawMapData = [], isLoading: loadingMap } = useGetMapLocationsQuery();
   const { data: fixerStats = [] } = useGetFixerStatsQuery();
 
-  // Actualizar el texto del loading después del montaje
   React.useEffect(() => {
     const loadingElement = document.getElementById('map-loading-text');
     if (loadingElement) {
@@ -75,24 +93,24 @@ const StatisticsPage: React.FC = () => {
 
   const filteredAppointments = React.useMemo(() => {
     if (!rawMapData) return [];
-
     return (
-      (rawMapData as ApiAppointment[]) // Aseguramos el tipo de entrada
-        .map(
-          (app): MappedAppointment => ({
+      (rawMapData as ApiAppointment[])
+        .map((app): MappedAppointment => {
+          const jitterAmount = 0.0002;
+          const randomLat = (Math.random() - 0.5) * jitterAmount;
+          const randomLng = (Math.random() - 0.5) * jitterAmount;
+          return {
             id: app._id,
             fixerName: app.fixerName || t('map.unknown'),
             requesterName: app.requesterName || app.current_requester_name || t('map.client'),
             date: app.date || app.starting_time || '',
             status: app.status || app.schedule_state || 'unknown',
-            lat: Number(app.lat),
-            lng: Number(app.lon),
+            lat: Number(app.lat) + randomLat,
+            lng: Number(app.lon) + randomLng,
             service: '',
-          }),
-        )
-        // Ahora 'app' ya es de tipo MappedAppointment, así que TS sabe que lat y lng son números
+          };
+        })
         .filter((app) => !isNaN(app.lat) && !isNaN(app.lng))
-        // Filtro de fechas
         .filter((app) => {
           if (!startDate || !endDate) return true;
           const appointmentDate = new Date(app.date);
@@ -107,7 +125,7 @@ const StatisticsPage: React.FC = () => {
   return (
     <div className='w-full min-h-screen bg-gray-50 pb-10'>
       <div className='max-w-7xl mx-auto px-6 py-8 flex flex-col gap-8'>
-        {/* 1. ENCABEZADO Y FILTROS */}
+        {/* ENCABEZADO Y FILTROS */}
         <div className='bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4'>
           <div>
             <h1 className='text-2xl font-bold text-gray-800'>{t('title')}</h1>
@@ -116,9 +134,7 @@ const StatisticsPage: React.FC = () => {
 
           <div className='flex flex-wrap gap-3 items-end'>
             <div>
-              <label className='text-xs text-gray-500 block mb-1 font-medium'>
-                {t('filters.from')}
-              </label>
+              <label className='text-xs text-gray-500 block mb-1 font-medium'>{t('filters.from')}</label>
               <input
                 type='date'
                 value={startDate}
@@ -127,9 +143,7 @@ const StatisticsPage: React.FC = () => {
               />
             </div>
             <div>
-              <label className='text-xs text-gray-500 block mb-1 font-medium'>
-                {t('filters.to')}
-              </label>
+              <label className='text-xs text-gray-500 block mb-1 font-medium'>{t('filters.to')}</label>
               <input
                 type='date'
                 value={endDate}
@@ -140,8 +154,9 @@ const StatisticsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. FILA SUPERIOR: MAPA (75%) + MÉTRICAS (25%) */}
+        {/* CONTENIDO PRINCIPAL */}
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 lg:h-[550px]'>
+          
           {/* MAPA */}
           <div className='lg:col-span-3 bg-white rounded-xl shadow border border-gray-200 overflow-hidden relative z-0 h-[400px] lg:h-full'>
             {loadingMap ? (
@@ -157,14 +172,17 @@ const StatisticsPage: React.FC = () => {
             )}
           </div>
 
-          {/* COLUMNA DERECHA: MÉTRICAS */}
-          <div className='lg:col-span-1 h-full flex flex-col gap-6'>
+          {/* BARRA LATERAL DERECHA */}
+          <div className='lg:col-span-1 h-full flex flex-col gap-6 overflow-y-auto pr-1'>
+            
+            {/* 🟢 5. AQUÍ USAMOS LA VARIABLE COMBINADA */}
             <div className='shrink-0'>
-              <MetricsCards metrics={metrics} />
+              <MetricsCards metrics={combinedMetrics} />
             </div>
           </div>
         </div>
 
+        {/* TABLA */}
         <div className='w-full'>
           <FixerStatsTable stats={fixerStats} />
         </div>
