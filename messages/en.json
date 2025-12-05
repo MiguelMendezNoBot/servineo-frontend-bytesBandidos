@@ -1311,6 +1311,15 @@
       "total": "Total Appointments",
       "scheduled": "Scheduled Appointments",
       "cancelled": "Cancelled Appointments"
+    },
+    "table": {
+      "title": "Fixer Statistics",
+      "fixer": "Fixer",
+      "total": "Total",
+      "active": "Scheduled",
+      "cancelled": "Cancelled",
+      "rescheduled": "Rescheduled",
+      "rate": "Cancellation Rate"
     }
   },
   "dashboard": {

@@ -1296,7 +1296,7 @@
     "backButton": "Volver atrás"
   },
   "tracking": {
-    "title": "Tracking de Citas",
+    "title": "Seguimiento de Citas",
     "subtitle": "Monitoreo de actividad y cobertura geográfica",
     "filters": {
       "from": "Desde",
@@ -1313,6 +1313,15 @@
       "total": "Total Citas",
       "scheduled": "Citas Agendadas",
       "cancelled": "Citas Canceladas"
+    },
+    "table": {
+      "title": "Estadísticas por Fixer",
+      "fixer": "Fixer",
+      "total": "Total",
+      "active": "Agendadas",
+      "cancelled": "Canceladas",
+      "rescheduled": "Reprogramadas",
+      "rate": "Tasa Cancelación"
     }
   },
   "dashboard": {
