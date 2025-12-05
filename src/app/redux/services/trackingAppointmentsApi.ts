@@ -14,7 +14,6 @@ export interface TrackingMetrics {
   total: number;
   active: number;
   cancelled: number;
-  // Estos son necesarios para que no falle la tarjeta
   virtual: number;
   presential: number;
 }
@@ -29,12 +28,25 @@ export interface FixerStat {
   rate: string;
 }
 
+export interface FixerByNameResponse {
+  fixerId: string;
+  fixerName: string;
+  stats: {
+    total_citas: number;
+    activas: number;
+    canceladas: number;
+    reprogramadas: number;
+    tasa_cancelacion: string;
+  };
+}
+
 interface FilterArgs {
   startDate?: string;
   endDate?: string;
 }
 
 export const trackingAppointmentsApi = baseApi.injectEndpoints({
+  overrideExisting: true, 
   endpoints: (builder) => ({
     getMapLocations: builder.query<MapLocation[], void>({
       query: () => ({
@@ -68,8 +80,7 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
       providesTags: ['Statistics'],
     }),
 
-    // --- ESTE ES EL ENDPOINT QUE FALTABA ---
-    getAppointmentTypesCount: builder.query<any, FilterArgs>({ 
+    getAppointmentTypesCount: builder.query<any, FilterArgs>({
       query: ({ startDate, endDate }) => {
         const url = '/admin/types-count';
         const params = new URLSearchParams();
@@ -84,7 +95,6 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
       },
       providesTags: ['Statistics'],
     }),
-    // ---------------------------------------
 
     getFixerStatsByName: builder.query<FixerStat[], string>({
       query: (name) => ({
@@ -92,16 +102,27 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
       providesTags: ['Statistics'],
+      transformResponse: (response: FixerByNameResponse) => {
+        if (!response || !response.stats) return [];
+
+        return [{
+          id: response.fixerId,
+          name: response.fixerName,
+          total: response.stats.total_citas,
+          active: response.stats.activas,
+          cancelled: response.stats.canceladas,
+          rescheduled: response.stats.reprogramadas,
+          rate: response.stats.tasa_cancelacion
+        }];
+      },
     }),
   }),
 });
 
-// --- AQUÍ ESTÁ LA SOLUCIÓN DEL ERROR ---
-// Tienes que exportar useGetAppointmentTypesCountQuery para poder usarlo en los otros archivos
 export const { 
   useGetMapLocationsQuery, 
   useGetTrackingMetricsQuery, 
   useGetFixerStatsQuery,
-  useGetAppointmentTypesCountQuery, // <--- ¡ESTO ES LO QUE TE FALTA!
+  useGetAppointmentTypesCountQuery,
   useGetFixerStatsByNameQuery
 } = trackingAppointmentsApi;
