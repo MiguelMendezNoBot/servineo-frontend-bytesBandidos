@@ -40,13 +40,19 @@ export interface FixerByNameResponse {
   };
 }
 
+export interface AppointmentTypesResponse {
+  virtual: number;
+  presential: number;
+  [key: string]: number;
+}
+
 interface FilterArgs {
   startDate?: string;
   endDate?: string;
 }
 
 export const trackingAppointmentsApi = baseApi.injectEndpoints({
-  overrideExisting: true, 
+  overrideExisting: true,
   endpoints: (builder) => ({
     getMapLocations: builder.query<MapLocation[], void>({
       query: () => ({
@@ -80,7 +86,7 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
       providesTags: ['Statistics'],
     }),
 
-    getAppointmentTypesCount: builder.query<any, FilterArgs>({
+    getAppointmentTypesCount: builder.query<AppointmentTypesResponse, FilterArgs>({
       query: ({ startDate, endDate }) => {
         const url = '/admin/types-count';
         const params = new URLSearchParams();
@@ -98,10 +104,11 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
 
     getFixerStatsByName: builder.query<FixerStat[], string>({
       query: (name) => ({
-        url: `/admin/fixer-stats-by-name?name=${name}`, 
+        url: `/admin/fixer-stats-by-name?name=${name}`,
         method: 'GET',
       }),
       providesTags: ['Statistics'],
+
       transformResponse: (response: FixerByNameResponse) => {
         if (!response || !response.stats) return [];
 
@@ -119,9 +126,9 @@ export const trackingAppointmentsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { 
-  useGetMapLocationsQuery, 
-  useGetTrackingMetricsQuery, 
+export const {
+  useGetMapLocationsQuery,
+  useGetTrackingMetricsQuery,
   useGetFixerStatsQuery,
   useGetAppointmentTypesCountQuery,
   useGetFixerStatsByNameQuery
