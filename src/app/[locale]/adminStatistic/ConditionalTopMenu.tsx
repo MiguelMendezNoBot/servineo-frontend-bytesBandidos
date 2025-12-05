@@ -9,20 +9,27 @@ export default function ConditionalTopMenu() {
   const [shouldShow, setShouldShow] = useState(true);
 
   useEffect(() => {
-    // Ocultar TopMenu en rutas de adminStatistic
+
     if (!pathname) {
       setShouldShow(true);
       return;
     }
 
     const normalizedPath = pathname.toLowerCase();
-    // Detectar rutas de adminStatistic (con o sin locale)
+  
     const isAdminStatisticRoute =
       normalizedPath.includes('/adminstatistic') ||
       normalizedPath.endsWith('/adminstatistic') ||
       /\/[a-z]{2}\/adminstatistic(\/)?$/i.test(normalizedPath);
 
-    setShouldShow(!isAdminStatisticRoute);
+    const isTrackingRoute = normalizedPath.includes('tracking');
+
+    if (isAdminStatisticRoute || isTrackingRoute) {
+      setShouldShow(false);
+    } else {
+      setShouldShow(true);
+    }
+
   }, [pathname]);
 
   if (!shouldShow) {
