@@ -21,7 +21,8 @@ export interface Appointment {
   service?: string;
 }
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+type DefaultIconPrototype = L.Icon.Default & { _getIconUrl?: string };
+delete (L.Icon.Default.prototype as DefaultIconPrototype)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconUrl: markerIcon.src,

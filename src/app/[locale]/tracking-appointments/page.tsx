@@ -41,6 +41,11 @@ interface MappedAppointment {
   service: string;
 }
 
+interface TypesData {
+  virtual: number;
+  presential: number;
+}
+
 const AdminMap = dynamic(() => import('@/Components/Statistics-panel/admin-map'), {
   ssr: false,
   loading: () => (
@@ -81,8 +86,8 @@ const StatisticsPage: React.FC = () => {
     total: generalMetrics.total || 0,
     active: generalMetrics.active || 0,
     cancelled: generalMetrics.cancelled || 0,
-    virtual: (typesDataRaw as any)?.virtual || 0,
-    presential: (typesDataRaw as any)?.presential || 0
+    virtual: (typesDataRaw as TypesData)?.virtual || 0,
+    presential: (typesDataRaw as TypesData)?.presential || 0
   };
 
   const { data: topStats = [], isLoading: loadingTop } = useGetFixerStatsQuery(undefined, {
