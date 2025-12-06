@@ -225,7 +225,8 @@
     "perPage": "per page",
     "previous": "Previous",
     "next": "Next",
-    "showingResults": "Showing {start} - {end} of {total} results"
+    "showingResults": "Showing {start} - {end} of {total} results",
+    "page": "Page"
   },
   "cardJob": {
     "imageAlt": "Image {current} of {total}",
@@ -616,7 +617,6 @@
       "message": "Your account has been created successfully"
     }
   },
-
   "Calendar": {
     "fixer": "Fixer",
     "viewCalendar": "View Calendar",
